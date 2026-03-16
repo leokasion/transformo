@@ -1,4 +1,16 @@
+# Transformo
+**A lite processing server engine for automated file conversion, media transcoding, and Linux package migration.**
+
 ![Build Status](https://github.com/leokasion/transformo/actions/workflows/docker-build.yml/badge.svg)
+
+---
+
+### 🚀 Deployment (Full Stack)
+The easiest way to run the full stack is using Docker Compose:
+
+```bash
+docker-compose up -d
+```
 
 # Project: Transformo
 **Tech Stack:** Python/Flask, Debian-slim, Docker/Docker-compose
