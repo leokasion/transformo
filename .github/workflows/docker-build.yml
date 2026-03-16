@@ -18,9 +18,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Web
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./web
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/transformo:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/transformo-web:latest
+
+      - name: Build and push Worker
+        uses: docker/build-push-action@v5
+        with:
+          context: ./worker
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/transformo-worker:latest  
