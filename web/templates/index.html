@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformo // Worker Node</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>> ./transformo</h1>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">> {{ message | safe }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <label for="type-selector">SOURCE:</label>
+                <select id="type-selector" onchange="updateFilter()">
+                    <option value="img">IMAGES (.png, .jpg, .jpeg, .bmp, .tiff)</option>
+                    <option value="vid">VIDEOS (.mp4, .mkv, .avi, .mov)</option>
+                    <option value="pkg">PACKAGES (.rpm, .deb, .tgz, .pkg, .slp)</option>
+                </select>
+
+                <label for="target-format">CONVERT TO:</label>
+                <select id="target-format" name="target_format">
+                <option value="">-- SELECT --</option>
+                </select>
+                
+                <input type="file" id="file-input" name="file" required>
+            </div>
+            <input type="submit" value="UPLOAD FILE">
+        </form>
+        <div class="footer">Max filesize: 250MB</div>
+    </div>
+    <script>
+    // 1. Define the map outside for global access
+    const formats = {
+        'img': ['png', 'jpg', 'bmp', 'tiff'],
+        'vid': ['mp4', 'mov', 'avi'],
+        'pkg': ['deb', 'rpm', 'tgz']
+    };
+
+    function updateFilter() {
+        const selector = document.getElementById('type-selector');
+        const targetSelector = document.getElementById('target-format');
+        const fileInput = document.getElementById('file-input');
+        
+        if (!selector || !targetSelector || !fileInput) return;
+
+        const mode = selector.value;
+        console.log("Switching mode to:", mode); // Check tictac logs for this
+
+        // 2. Update File Input Filter
+        const acceptMap = {
+            'img': ".png, .jpg, .jpeg, .bmp, .tiff",
+            'vid': ".mp4, .mkv, .avi, .mov",
+            'pkg': ".rpm, .deb, .tgz, .pkg, .slp"
+        };
+        fileInput.accept = acceptMap[mode];
+
+        // 3. Clear and Re-populate Target Dropdown
+        targetSelector.innerHTML = ''; 
+        
+        formats[mode].forEach(ext => {
+            let option = document.createElement('option');
+            option.value = ext;
+            option.text = ext.toUpperCase();
+            targetSelector.appendChild(option);
+        });
+    }
+
+    // 4. Proper Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        updateFilter(); // Run once on load
+        document.getElementById('type-selector').addEventListener('change', updateFilter);
+    });
+</script>
+</body>
+</html>

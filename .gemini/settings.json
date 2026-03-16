@@ -1,0 +1,6 @@
+{ "general": { "previewFeatures": true }, 
+  "contextFileName": "AGENT.md",
+  "autoAccept": false,
+  "coreTools": ["read_file", "list_dir", "terminal"],
+  "excludeTools": ["write_file"]
+}

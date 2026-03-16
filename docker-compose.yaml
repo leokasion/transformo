@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # The "Face": Flask Web UI
+  web:
+    build: ./web
+    container_name: transformo_web
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data/uploads:/app/uploads
+      - ./data/processed:/app/outputs
+    environment:
+      - UPLOAD_FOLDER=/app/uploads
+      - OUTPUT_DIR=/app/outputs
+      - PUID=1000
+      - PGID=1000
+    restart: unless-stopped
+
+  # The "Muscle": Conversion Worker
+  worker:
+    build: ./worker
+    container_name: transformo_worker
+    volumes:
+      - ./data/uploads:/app/inputs
+      - ./data/processed:/app/outputs
+    environment:
+      - INPUT_DIR=/app/inputs
+      - OUTPUT_DIR=/app/outputs
+      - PUID=1000
+      - PGID=1000
+    restart: unless-stopped
+
+    # SysAdmin Resource Pinning
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    restart: unless-stopped

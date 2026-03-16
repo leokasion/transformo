@@ -1,0 +1,25 @@
+# Data and Uploads
+data/processed/*
+data/uploads/*
+web/uploads/*
+worker/processed/*
+!data/processed/.gitkeep
+!data/uploads/.gitkeep
+!web/uploads/.gitkeep
+!worker/processed/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+ENV/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
