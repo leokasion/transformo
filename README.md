@@ -1,5 +1,4 @@
 # Project: Transformo
-**Lead Architect:** Senior SysAdmin (Argentina-based, 25yr exp)
 **Tech Stack:** Python/Flask, Debian-slim, Docker/Docker-compose
 
 ## Core Architecture: "Split-Brain" Worker
