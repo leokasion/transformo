@@ -1,3 +1,5 @@
+![Build Status](https://github.com/leokasion/transformo/actions/workflows/docker-build.yml/badge.svg)
+
 # Project: Transformo
 **Tech Stack:** Python/Flask, Debian-slim, Docker/Docker-compose
 
